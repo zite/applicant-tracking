@@ -1,0 +1,19 @@
+{
+  "name": "applicant-tracking",
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "zitejs": "0.9.115"
+  },
+  "scripts": {
+    "dev": "sh -c 'set -a; [ -f .env.local ] && . ./.env.local; set +a; yarn workspace @project/applicant-tracking dev'",
+    "dev:careers": "sh -c 'set -a; [ -f .env.local ] && . ./.env.local; set +a; yarn workspace @project/careers-site dev --port 8081'",
+    "generate": "zitejs generate",
+    "check": "zitejs check",
+    "build": "yarn workspace @project/applicant-tracking build"
+  }
+}

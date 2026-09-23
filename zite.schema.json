@@ -1,0 +1,2503 @@
+{
+  "tables": [
+    {
+      "id": "t7uKGKpj6Xw",
+      "sdkName": "teamMembers",
+      "name": "Team Members",
+      "primaryFieldId": "f39aXnyxywA",
+      "fields": [
+        {
+          "id": "f39aXnyxywA",
+          "sdkName": "name",
+          "definition": {
+            "name": "Name",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fnP6a3YN5Ns",
+          "sdkName": "email",
+          "definition": {
+            "name": "Email",
+            "type": "email",
+            "template": {}
+          }
+        },
+        {
+          "id": "fuRQZp6qiEd",
+          "sdkName": "title",
+          "definition": {
+            "name": "Title",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fx7x2TLVfiV",
+          "sdkName": "avatarUrl",
+          "definition": {
+            "name": "Avatar URL",
+            "type": "url",
+            "template": {}
+          }
+        },
+        {
+          "id": "f4m2YSYXxSn",
+          "sdkName": "role",
+          "definition": {
+            "name": "Role",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "uA4L",
+                  "label": "Admin",
+                  "color": "purple"
+                },
+                {
+                  "value": "ksaS",
+                  "label": "Recruiter",
+                  "color": "orange"
+                },
+                {
+                  "value": "o3Cq",
+                  "label": "Hiring Manager",
+                  "color": "blue"
+                },
+                {
+                  "value": "2aSx",
+                  "label": "Interviewer",
+                  "color": "gray"
+                },
+                {
+                  "value": "42vi",
+                  "label": "Coordinator",
+                  "color": "red"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "ftMfSEQ8cSy",
+          "sdkName": "department",
+          "definition": {
+            "name": "Department",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "4n9f",
+                  "label": "Engineering",
+                  "color": "purple"
+                },
+                {
+                  "value": "j99W",
+                  "label": "Product",
+                  "color": "orange"
+                },
+                {
+                  "value": "8MRG",
+                  "label": "Design",
+                  "color": "blue"
+                },
+                {
+                  "value": "4Eek",
+                  "label": "Sales",
+                  "color": "gray"
+                },
+                {
+                  "value": "9mr2",
+                  "label": "Marketing",
+                  "color": "red"
+                },
+                {
+                  "value": "5e9V",
+                  "label": "Operations",
+                  "color": "yellow"
+                },
+                {
+                  "value": "uAGA",
+                  "label": "Finance",
+                  "color": "green"
+                },
+                {
+                  "value": "byno",
+                  "label": "People",
+                  "color": "pink"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fwxby3WifZB",
+          "sdkName": "active",
+          "definition": {
+            "name": "Active",
+            "type": "checkbox",
+            "template": {}
+          }
+        },
+        {
+          "id": "fmpdwk2iB36",
+          "sdkName": "jobs",
+          "definition": {
+            "name": "Jobs",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tocDQqoQcoZ",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "f43E78piT1n"
+            }
+          }
+        },
+        {
+          "id": "ffPp58rEDoW",
+          "sdkName": "jobs1",
+          "definition": {
+            "name": "Jobs (1)",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tocDQqoQcoZ",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fmosvwTxFQX"
+            }
+          }
+        },
+        {
+          "id": "fecdc6EJWn6",
+          "sdkName": "applications",
+          "definition": {
+            "name": "Applications",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t6LkaNJSpPA",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fuknbdhDQvF"
+            }
+          }
+        },
+        {
+          "id": "fm1m2KK2hQ2",
+          "sdkName": "interviews",
+          "definition": {
+            "name": "Interviews",
+            "type": "linked_record",
+            "template": {
+              "tableId": "thp1fRcFGm3",
+              "isInverse": true,
+              "allowMultiple": true,
+              "inverseFieldId": "fghK34hPzcX"
+            }
+          }
+        },
+        {
+          "id": "fgUSPGArM2b",
+          "sdkName": "scorecards",
+          "definition": {
+            "name": "Scorecards",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tvbZEmrqvVc",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fp4ioZMNtn3"
+            }
+          }
+        },
+        {
+          "id": "fnF9PY7EFEe",
+          "sdkName": "activities",
+          "definition": {
+            "name": "Activities",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tgMRypqPQcb",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fjxWMCeXRnj"
+            }
+          }
+        },
+        {
+          "id": "fgFqdp5AbWB",
+          "sdkName": "offers",
+          "definition": {
+            "name": "Offers",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tckVejmZAMC",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fnNbGqpeQVz"
+            }
+          }
+        },
+        {
+          "id": "f57HsrUSgBT",
+          "sdkName": "emailMessages",
+          "definition": {
+            "name": "Email Messages",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t5j9Qv617gD",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "foTn83cRk6K"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "twkRmyGxR4B",
+      "sdkName": "candidates",
+      "name": "Candidates",
+      "primaryFieldId": "fhe8KLLNS3Z",
+      "fields": [
+        {
+          "id": "fhe8KLLNS3Z",
+          "sdkName": "fullName",
+          "definition": {
+            "name": "Full Name",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "foq7Qh92nBg",
+          "sdkName": "email",
+          "definition": {
+            "name": "Email",
+            "type": "email",
+            "template": {}
+          }
+        },
+        {
+          "id": "fn1vX1bL65t",
+          "sdkName": "phone",
+          "definition": {
+            "name": "Phone",
+            "type": "phone_number",
+            "template": {}
+          }
+        },
+        {
+          "id": "f8yygLLEeaL",
+          "sdkName": "headline",
+          "definition": {
+            "name": "Headline",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "frqDEgZL4XA",
+          "sdkName": "currentCompany",
+          "definition": {
+            "name": "Current Company",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fedLf8Yqc3H",
+          "sdkName": "location",
+          "definition": {
+            "name": "Location",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fmt51Z1b5qd",
+          "sdkName": "linkedInUrl",
+          "definition": {
+            "name": "LinkedIn URL",
+            "type": "url",
+            "template": {}
+          }
+        },
+        {
+          "id": "f6L7aAsctNW",
+          "sdkName": "gitHubUrl",
+          "definition": {
+            "name": "GitHub URL",
+            "type": "url",
+            "template": {}
+          }
+        },
+        {
+          "id": "fdCtoABzGWH",
+          "sdkName": "portfolioUrl",
+          "definition": {
+            "name": "Portfolio URL",
+            "type": "url",
+            "template": {}
+          }
+        },
+        {
+          "id": "fdTN9YgxbsU",
+          "sdkName": "avatarUrl",
+          "definition": {
+            "name": "Avatar URL",
+            "type": "url",
+            "template": {}
+          }
+        },
+        {
+          "id": "fb3wroC28cX",
+          "sdkName": "yearsExperience",
+          "definition": {
+            "name": "Years Experience",
+            "type": "number",
+            "template": {
+              "numberFormat": "local",
+              "decimalPlaces": 0
+            }
+          }
+        },
+        {
+          "id": "fkSp7dBG8Vb",
+          "sdkName": "resume",
+          "definition": {
+            "name": "Resume",
+            "type": "attachments",
+            "template": {}
+          }
+        },
+        {
+          "id": "fwAE1Mb9eTk",
+          "sdkName": "aiSummary",
+          "definition": {
+            "name": "AI Summary",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fc5C2sXHPFL",
+          "sdkName": "source",
+          "definition": {
+            "name": "Source",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "tyfR",
+                  "label": "Applied",
+                  "color": "purple"
+                },
+                {
+                  "value": "h2df",
+                  "label": "Referral",
+                  "color": "orange"
+                },
+                {
+                  "value": "hydT",
+                  "label": "Sourced",
+                  "color": "blue"
+                },
+                {
+                  "value": "fJ8Y",
+                  "label": "Agency",
+                  "color": "gray"
+                },
+                {
+                  "value": "6icp",
+                  "label": "Event",
+                  "color": "red"
+                },
+                {
+                  "value": "hahd",
+                  "label": "Inbound",
+                  "color": "yellow"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fcHeZJv86Ei",
+          "sdkName": "sourceDetail",
+          "definition": {
+            "name": "Source Detail",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "faxCqbUTGZ9",
+          "sdkName": "skills",
+          "definition": {
+            "name": "Skills",
+            "type": "multiple_select",
+            "template": {
+              "options": [
+                {
+                  "value": "pB1L",
+                  "label": "TypeScript",
+                  "color": "purple"
+                },
+                {
+                  "value": "tLBL",
+                  "label": "React",
+                  "color": "orange"
+                },
+                {
+                  "value": "hNHA",
+                  "label": "Python",
+                  "color": "blue"
+                },
+                {
+                  "value": "n9tV",
+                  "label": "Go",
+                  "color": "gray"
+                },
+                {
+                  "value": "mrmd",
+                  "label": "Rust",
+                  "color": "red"
+                },
+                {
+                  "value": "8H5E",
+                  "label": "Kubernetes",
+                  "color": "yellow"
+                },
+                {
+                  "value": "rF8Y",
+                  "label": "AWS",
+                  "color": "green"
+                },
+                {
+                  "value": "6kNs",
+                  "label": "Postgres",
+                  "color": "pink"
+                },
+                {
+                  "value": "3CfQ",
+                  "label": "Machine Learning",
+                  "color": "lime"
+                },
+                {
+                  "value": "iyD2",
+                  "label": "Product Strategy",
+                  "color": "tangerine"
+                },
+                {
+                  "value": "fxxW",
+                  "label": "Figma",
+                  "color": "emerald"
+                },
+                {
+                  "value": "74gh",
+                  "label": "Design Systems",
+                  "color": "sky"
+                },
+                {
+                  "value": "1MJg",
+                  "label": "User Research",
+                  "color": "teal"
+                },
+                {
+                  "value": "gMMa",
+                  "label": "Enterprise Sales",
+                  "color": "indigo"
+                },
+                {
+                  "value": "abSc",
+                  "label": "Demand Gen",
+                  "color": "cyan"
+                },
+                {
+                  "value": "tuHa",
+                  "label": "Analytics",
+                  "color": "violet"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "febUA3AUp4p",
+          "sdkName": "tags",
+          "definition": {
+            "name": "Tags",
+            "type": "multiple_select",
+            "template": {
+              "options": [
+                {
+                  "value": "d2VW",
+                  "label": "Top Prospect",
+                  "color": "purple"
+                },
+                {
+                  "value": "whHm",
+                  "label": "Referral",
+                  "color": "orange"
+                },
+                {
+                  "value": "k5cM",
+                  "label": "Silver Medalist",
+                  "color": "blue"
+                },
+                {
+                  "value": "n4ZL",
+                  "label": "Needs Visa",
+                  "color": "gray"
+                },
+                {
+                  "value": "cWDo",
+                  "label": "Senior",
+                  "color": "red"
+                },
+                {
+                  "value": "vaD8",
+                  "label": "Re-engage Later",
+                  "color": "yellow"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fogvcWSbRg4",
+          "sdkName": "applications",
+          "definition": {
+            "name": "Applications",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t6LkaNJSpPA",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fq8oFTHiqMU"
+            }
+          }
+        },
+        {
+          "id": "fdx271bEQKB",
+          "sdkName": "activities",
+          "definition": {
+            "name": "Activities",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tgMRypqPQcb",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "f6Ny258sRdV"
+            }
+          }
+        },
+        {
+          "id": "fqdkd4yQ5u4",
+          "sdkName": "emailMessages",
+          "definition": {
+            "name": "Email Messages",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t5j9Qv617gD",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fsjoFpe3zcV"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "tkHujmeGKHR",
+      "sdkName": "emailTemplates",
+      "name": "Email Templates",
+      "primaryFieldId": "fvCj3x7qKbQ",
+      "fields": [
+        {
+          "id": "fvCj3x7qKbQ",
+          "sdkName": "name",
+          "definition": {
+            "name": "Name",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fdxa7y9ujF8",
+          "sdkName": "subject",
+          "definition": {
+            "name": "Subject",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fwxV6rrMCwQ",
+          "sdkName": "body",
+          "definition": {
+            "name": "Body",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "feKKyb22awV",
+          "sdkName": "category",
+          "definition": {
+            "name": "Category",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "dEZ4",
+                  "label": "Outreach",
+                  "color": "purple"
+                },
+                {
+                  "value": "qJam",
+                  "label": "Screening",
+                  "color": "orange"
+                },
+                {
+                  "value": "piJw",
+                  "label": "Scheduling",
+                  "color": "blue"
+                },
+                {
+                  "value": "hFg2",
+                  "label": "Rejection",
+                  "color": "gray"
+                },
+                {
+                  "value": "kcZ8",
+                  "label": "Offer",
+                  "color": "red"
+                },
+                {
+                  "value": "esBx",
+                  "label": "Follow-up",
+                  "color": "yellow"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "tocDQqoQcoZ",
+      "sdkName": "jobs",
+      "name": "Jobs",
+      "primaryFieldId": "frpkRQJk24g",
+      "fields": [
+        {
+          "id": "frpkRQJk24g",
+          "sdkName": "title",
+          "definition": {
+            "name": "Title",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fexA7EEJUNr",
+          "sdkName": "slug",
+          "definition": {
+            "name": "Slug",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fbJ7UvuDzSN",
+          "sdkName": "team",
+          "definition": {
+            "name": "Team",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "f7UTU9CUPEW",
+          "sdkName": "location",
+          "definition": {
+            "name": "Location",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fh2wLDsB7Xk",
+          "sdkName": "description",
+          "definition": {
+            "name": "Description",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fqYZezZpo4c",
+          "sdkName": "requirements",
+          "definition": {
+            "name": "Requirements",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fxxCEwpiqk4",
+          "sdkName": "benefits",
+          "definition": {
+            "name": "Benefits",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "frge4JAzUu8",
+          "sdkName": "openedDate",
+          "definition": {
+            "name": "Opened Date",
+            "type": "date",
+            "template": {
+              "dateFormat": "local"
+            }
+          }
+        },
+        {
+          "id": "f9oNeT8kxgC",
+          "sdkName": "targetStartDate",
+          "definition": {
+            "name": "Target Start Date",
+            "type": "date",
+            "template": {
+              "dateFormat": "local"
+            }
+          }
+        },
+        {
+          "id": "fvq3geD2Fv3",
+          "sdkName": "openings",
+          "definition": {
+            "name": "Openings",
+            "type": "number",
+            "template": {
+              "numberFormat": "local",
+              "decimalPlaces": 0
+            }
+          }
+        },
+        {
+          "id": "fnfWppPuemR",
+          "sdkName": "salaryMin",
+          "definition": {
+            "name": "Salary Min",
+            "type": "currency",
+            "template": {
+              "numberFormat": "local",
+              "decimalPlaces": 0,
+              "currencySymbol": "$"
+            }
+          }
+        },
+        {
+          "id": "f1t6UtVcsqq",
+          "sdkName": "salaryMax",
+          "definition": {
+            "name": "Salary Max",
+            "type": "currency",
+            "template": {
+              "numberFormat": "local",
+              "decimalPlaces": 0,
+              "currencySymbol": "$"
+            }
+          }
+        },
+        {
+          "id": "fqYA89N3yBU",
+          "sdkName": "department",
+          "definition": {
+            "name": "Department",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "1ga3",
+                  "label": "Engineering",
+                  "color": "purple"
+                },
+                {
+                  "value": "k6fj",
+                  "label": "Product",
+                  "color": "orange"
+                },
+                {
+                  "value": "7tzq",
+                  "label": "Design",
+                  "color": "blue"
+                },
+                {
+                  "value": "sMhX",
+                  "label": "Sales",
+                  "color": "gray"
+                },
+                {
+                  "value": "17yH",
+                  "label": "Marketing",
+                  "color": "red"
+                },
+                {
+                  "value": "gWck",
+                  "label": "Operations",
+                  "color": "yellow"
+                },
+                {
+                  "value": "9gf2",
+                  "label": "Finance",
+                  "color": "green"
+                },
+                {
+                  "value": "ccUF",
+                  "label": "People",
+                  "color": "pink"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fpkLUU1ByGC",
+          "sdkName": "workplaceType",
+          "definition": {
+            "name": "Workplace Type",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "7qee",
+                  "label": "Remote",
+                  "color": "purple"
+                },
+                {
+                  "value": "3wzx",
+                  "label": "Hybrid",
+                  "color": "orange"
+                },
+                {
+                  "value": "eBJE",
+                  "label": "On-site",
+                  "color": "blue"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "f7hJGQ6EXMe",
+          "sdkName": "employmentType",
+          "definition": {
+            "name": "Employment Type",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "1iUJ",
+                  "label": "Full-time",
+                  "color": "purple"
+                },
+                {
+                  "value": "fiAd",
+                  "label": "Part-time",
+                  "color": "orange"
+                },
+                {
+                  "value": "pwG7",
+                  "label": "Contract",
+                  "color": "blue"
+                },
+                {
+                  "value": "kcVp",
+                  "label": "Internship",
+                  "color": "gray"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fawHYJNQuvP",
+          "sdkName": "status",
+          "definition": {
+            "name": "Status",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "2DLJ",
+                  "label": "Draft",
+                  "color": "purple"
+                },
+                {
+                  "value": "7tXF",
+                  "label": "Open",
+                  "color": "orange"
+                },
+                {
+                  "value": "iUXX",
+                  "label": "Paused",
+                  "color": "blue"
+                },
+                {
+                  "value": "m2yN",
+                  "label": "Closed",
+                  "color": "gray"
+                },
+                {
+                  "value": "jSnW",
+                  "label": "Filled",
+                  "color": "red"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fhDjnPeg3w3",
+          "sdkName": "priority",
+          "definition": {
+            "name": "Priority",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "8STn",
+                  "label": "Low",
+                  "color": "purple"
+                },
+                {
+                  "value": "1QDe",
+                  "label": "Medium",
+                  "color": "orange"
+                },
+                {
+                  "value": "dMXw",
+                  "label": "High",
+                  "color": "blue"
+                },
+                {
+                  "value": "chtb",
+                  "label": "Critical",
+                  "color": "gray"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "frZ53BjrVz5",
+          "sdkName": "published",
+          "definition": {
+            "name": "Published",
+            "type": "checkbox",
+            "template": {}
+          }
+        },
+        {
+          "id": "f68Mg9Vbgub",
+          "sdkName": "confidential",
+          "definition": {
+            "name": "Confidential",
+            "type": "checkbox",
+            "template": {}
+          }
+        },
+        {
+          "id": "f43E78piT1n",
+          "sdkName": "hiringManager",
+          "definition": {
+            "name": "Hiring Manager",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t7uKGKpj6Xw",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fmpdwk2iB36"
+            }
+          }
+        },
+        {
+          "id": "fmosvwTxFQX",
+          "sdkName": "recruiter",
+          "definition": {
+            "name": "Recruiter",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t7uKGKpj6Xw",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "ffPp58rEDoW"
+            }
+          }
+        },
+        {
+          "id": "f932yJQcFJa",
+          "sdkName": "stages",
+          "definition": {
+            "name": "Stages",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tjmk8vNu4Tt",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "ftdq8mUp2Kc"
+            }
+          }
+        },
+        {
+          "id": "ffTFqQx659C",
+          "sdkName": "applications",
+          "definition": {
+            "name": "Applications",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t6LkaNJSpPA",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fquNuujxY6w"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "tjmk8vNu4Tt",
+      "sdkName": "stages",
+      "name": "Stages",
+      "primaryFieldId": "fbi4kacUQeF",
+      "fields": [
+        {
+          "id": "fbi4kacUQeF",
+          "sdkName": "name",
+          "definition": {
+            "name": "Name",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "f6a7cK7BowE",
+          "sdkName": "order",
+          "definition": {
+            "name": "Order",
+            "type": "number",
+            "template": {
+              "numberFormat": "local",
+              "decimalPlaces": 0
+            }
+          }
+        },
+        {
+          "id": "fwnGXZ8rzXt",
+          "sdkName": "interviewKit",
+          "definition": {
+            "name": "Interview Kit",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fnt3Mjw8DSk",
+          "sdkName": "targetDays",
+          "definition": {
+            "name": "Target Days",
+            "type": "number",
+            "template": {
+              "numberFormat": "local",
+              "decimalPlaces": 0
+            }
+          }
+        },
+        {
+          "id": "f1WMjcnVVz5",
+          "sdkName": "kind",
+          "definition": {
+            "name": "Kind",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "tvLP",
+                  "label": "Lead",
+                  "color": "purple"
+                },
+                {
+                  "value": "bAiG",
+                  "label": "Applied",
+                  "color": "orange"
+                },
+                {
+                  "value": "vhFp",
+                  "label": "Screen",
+                  "color": "blue"
+                },
+                {
+                  "value": "mLom",
+                  "label": "Interview",
+                  "color": "gray"
+                },
+                {
+                  "value": "miHn",
+                  "label": "Offer",
+                  "color": "red"
+                },
+                {
+                  "value": "nswp",
+                  "label": "Hired",
+                  "color": "yellow"
+                },
+                {
+                  "value": "nD8N",
+                  "label": "Rejected",
+                  "color": "green"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "ftdq8mUp2Kc",
+          "sdkName": "job",
+          "definition": {
+            "name": "Job",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tocDQqoQcoZ",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "f932yJQcFJa"
+            }
+          }
+        },
+        {
+          "id": "fth5mWWCzxY",
+          "sdkName": "applications",
+          "definition": {
+            "name": "Applications",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t6LkaNJSpPA",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fbMofz5U6tc"
+            }
+          }
+        },
+        {
+          "id": "fiKjMDfrq95",
+          "sdkName": "interviews",
+          "definition": {
+            "name": "Interviews",
+            "type": "linked_record",
+            "template": {
+              "tableId": "thp1fRcFGm3",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "f3WQgjvaiqJ"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "t6LkaNJSpPA",
+      "sdkName": "applications",
+      "name": "Applications",
+      "primaryFieldId": "f6t6JY6gBLt",
+      "fields": [
+        {
+          "id": "f6t6JY6gBLt",
+          "sdkName": "application",
+          "definition": {
+            "name": "Application",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fwnwzCdF8cg",
+          "sdkName": "appliedDate",
+          "definition": {
+            "name": "Applied Date",
+            "type": "date",
+            "template": {
+              "dateFormat": "local"
+            }
+          }
+        },
+        {
+          "id": "fe8vq8UDJs9",
+          "sdkName": "stageEnteredAt",
+          "definition": {
+            "name": "Stage Entered At",
+            "type": "datetime",
+            "template": {
+              "timezone": "",
+              "dateFormat": "local",
+              "timeFormat": "12h",
+              "displayTimeZone": false
+            }
+          }
+        },
+        {
+          "id": "fsLnmcXaxYv",
+          "sdkName": "rejectedDate",
+          "definition": {
+            "name": "Rejected Date",
+            "type": "date",
+            "template": {
+              "dateFormat": "local"
+            }
+          }
+        },
+        {
+          "id": "fmvWqTqf7Rq",
+          "sdkName": "status",
+          "definition": {
+            "name": "Status",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "uAzS",
+                  "label": "Active",
+                  "color": "purple"
+                },
+                {
+                  "value": "5G3f",
+                  "label": "Hired",
+                  "color": "orange"
+                },
+                {
+                  "value": "iLvx",
+                  "label": "Rejected",
+                  "color": "blue"
+                },
+                {
+                  "value": "whXr",
+                  "label": "Withdrawn",
+                  "color": "gray"
+                },
+                {
+                  "value": "pZ7u",
+                  "label": "On Hold",
+                  "color": "red"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "feegBhKGM5R",
+          "sdkName": "rating",
+          "definition": {
+            "name": "Rating",
+            "type": "rating",
+            "template": {
+              "maxRating": 4
+            }
+          }
+        },
+        {
+          "id": "fuyKXuyBYD1",
+          "sdkName": "source",
+          "definition": {
+            "name": "Source",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "adWc",
+                  "label": "Applied",
+                  "color": "purple"
+                },
+                {
+                  "value": "wCuT",
+                  "label": "Referral",
+                  "color": "orange"
+                },
+                {
+                  "value": "7vqs",
+                  "label": "Sourced",
+                  "color": "blue"
+                },
+                {
+                  "value": "vowj",
+                  "label": "Agency",
+                  "color": "gray"
+                },
+                {
+                  "value": "fFiA",
+                  "label": "Event",
+                  "color": "red"
+                },
+                {
+                  "value": "pzbU",
+                  "label": "Inbound",
+                  "color": "yellow"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "foJpVGvvnY1",
+          "sdkName": "rejectionReason",
+          "definition": {
+            "name": "Rejection Reason",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "uyLn",
+                  "label": "Lacking Experience",
+                  "color": "purple"
+                },
+                {
+                  "value": "ckYA",
+                  "label": "Skills Mismatch",
+                  "color": "orange"
+                },
+                {
+                  "value": "axmW",
+                  "label": "Compensation",
+                  "color": "blue"
+                },
+                {
+                  "value": "smjn",
+                  "label": "Location",
+                  "color": "gray"
+                },
+                {
+                  "value": "jfCv",
+                  "label": "Culture Fit",
+                  "color": "red"
+                },
+                {
+                  "value": "oF5Z",
+                  "label": "Accepted Other Offer",
+                  "color": "yellow"
+                },
+                {
+                  "value": "iXoR",
+                  "label": "Unresponsive",
+                  "color": "green"
+                },
+                {
+                  "value": "1bv4",
+                  "label": "Role Closed",
+                  "color": "pink"
+                },
+                {
+                  "value": "pQdd",
+                  "label": "Other",
+                  "color": "lime"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fq8oFTHiqMU",
+          "sdkName": "candidate",
+          "definition": {
+            "name": "Candidate",
+            "type": "linked_record",
+            "template": {
+              "tableId": "twkRmyGxR4B",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fogvcWSbRg4"
+            }
+          }
+        },
+        {
+          "id": "fquNuujxY6w",
+          "sdkName": "job",
+          "definition": {
+            "name": "Job",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tocDQqoQcoZ",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "ffTFqQx659C"
+            }
+          }
+        },
+        {
+          "id": "fbMofz5U6tc",
+          "sdkName": "currentStage",
+          "definition": {
+            "name": "Current Stage",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tjmk8vNu4Tt",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fth5mWWCzxY"
+            }
+          }
+        },
+        {
+          "id": "fuknbdhDQvF",
+          "sdkName": "owner",
+          "definition": {
+            "name": "Owner",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t7uKGKpj6Xw",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fecdc6EJWn6"
+            }
+          }
+        },
+        {
+          "id": "fhVNecSNGGa",
+          "sdkName": "interviews",
+          "definition": {
+            "name": "Interviews",
+            "type": "linked_record",
+            "template": {
+              "tableId": "thp1fRcFGm3",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fmtgPkxeKHS"
+            }
+          }
+        },
+        {
+          "id": "fuss5oRG9Vm",
+          "sdkName": "scorecards",
+          "definition": {
+            "name": "Scorecards",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tvbZEmrqvVc",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fqFzWyo1JAZ"
+            }
+          }
+        },
+        {
+          "id": "fgj1Ygs6bJg",
+          "sdkName": "activities",
+          "definition": {
+            "name": "Activities",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tgMRypqPQcb",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "frM3tzXxGSK"
+            }
+          }
+        },
+        {
+          "id": "f72SntRo1Pw",
+          "sdkName": "offers",
+          "definition": {
+            "name": "Offers",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tckVejmZAMC",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fpaKntAjHKr"
+            }
+          }
+        },
+        {
+          "id": "fiohLh5d9eY",
+          "sdkName": "emailMessages",
+          "definition": {
+            "name": "Email Messages",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t5j9Qv617gD",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fvLtG4d9L9Q"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "thp1fRcFGm3",
+      "sdkName": "interviews",
+      "name": "Interviews",
+      "primaryFieldId": "fuZvdrhDHAn",
+      "fields": [
+        {
+          "id": "fuZvdrhDHAn",
+          "sdkName": "title",
+          "definition": {
+            "name": "Title",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fwaEqbvWoJY",
+          "sdkName": "scheduledAt",
+          "definition": {
+            "name": "Scheduled At",
+            "type": "datetime",
+            "template": {
+              "timezone": "",
+              "dateFormat": "local",
+              "timeFormat": "12h",
+              "displayTimeZone": false
+            }
+          }
+        },
+        {
+          "id": "fhrmZEDctfu",
+          "sdkName": "durationMinutes",
+          "definition": {
+            "name": "Duration Minutes",
+            "type": "number",
+            "template": {
+              "numberFormat": "local",
+              "decimalPlaces": 0
+            }
+          }
+        },
+        {
+          "id": "f4roZNJ2GXW",
+          "sdkName": "meetingLink",
+          "definition": {
+            "name": "Meeting Link",
+            "type": "url",
+            "template": {}
+          }
+        },
+        {
+          "id": "f2mcMdXj25X",
+          "sdkName": "location",
+          "definition": {
+            "name": "Location",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fkCw35ZS1gK",
+          "sdkName": "notes",
+          "definition": {
+            "name": "Notes",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "f4VWuu9pjen",
+          "sdkName": "type",
+          "definition": {
+            "name": "Type",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "abVe",
+                  "label": "Phone Screen",
+                  "color": "purple"
+                },
+                {
+                  "value": "hE2Y",
+                  "label": "Recruiter Screen",
+                  "color": "orange"
+                },
+                {
+                  "value": "9vR4",
+                  "label": "Technical",
+                  "color": "blue"
+                },
+                {
+                  "value": "9DKk",
+                  "label": "System Design",
+                  "color": "gray"
+                },
+                {
+                  "value": "9uJf",
+                  "label": "Behavioral",
+                  "color": "red"
+                },
+                {
+                  "value": "1oqD",
+                  "label": "Hiring Manager",
+                  "color": "yellow"
+                },
+                {
+                  "value": "rJPt",
+                  "label": "Onsite",
+                  "color": "green"
+                },
+                {
+                  "value": "qAWE",
+                  "label": "Culture",
+                  "color": "pink"
+                },
+                {
+                  "value": "qUrZ",
+                  "label": "Final",
+                  "color": "lime"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "ffvNEARR7GY",
+          "sdkName": "status",
+          "definition": {
+            "name": "Status",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "ek59",
+                  "label": "Unscheduled",
+                  "color": "purple"
+                },
+                {
+                  "value": "kNDn",
+                  "label": "Scheduled",
+                  "color": "orange"
+                },
+                {
+                  "value": "7tYf",
+                  "label": "Completed",
+                  "color": "blue"
+                },
+                {
+                  "value": "97zd",
+                  "label": "Cancelled",
+                  "color": "gray"
+                },
+                {
+                  "value": "oyVK",
+                  "label": "No Show",
+                  "color": "red"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fmtgPkxeKHS",
+          "sdkName": "application",
+          "definition": {
+            "name": "Application",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t6LkaNJSpPA",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fhVNecSNGGa"
+            }
+          }
+        },
+        {
+          "id": "f3WQgjvaiqJ",
+          "sdkName": "stage",
+          "definition": {
+            "name": "Stage",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tjmk8vNu4Tt",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fiKjMDfrq95"
+            }
+          }
+        },
+        {
+          "id": "fghK34hPzcX",
+          "sdkName": "interviewers",
+          "definition": {
+            "name": "Interviewers",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t7uKGKpj6Xw",
+              "isInverse": false,
+              "allowMultiple": true,
+              "inverseFieldId": "fm1m2KK2hQ2"
+            }
+          }
+        },
+        {
+          "id": "fgUCzwKHwLo",
+          "sdkName": "scorecards",
+          "definition": {
+            "name": "Scorecards",
+            "type": "linked_record",
+            "template": {
+              "tableId": "tvbZEmrqvVc",
+              "isInverse": true,
+              "allowMultiple": false,
+              "inverseFieldId": "fi7b8Zvre5P"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "tvbZEmrqvVc",
+      "sdkName": "scorecards",
+      "name": "Scorecards",
+      "primaryFieldId": "fbkM6WoCF9o",
+      "fields": [
+        {
+          "id": "fbkM6WoCF9o",
+          "sdkName": "title",
+          "definition": {
+            "name": "Title",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "faf1w5V92nr",
+          "sdkName": "submittedAt",
+          "definition": {
+            "name": "Submitted At",
+            "type": "datetime",
+            "template": {
+              "timezone": "",
+              "dateFormat": "local",
+              "timeFormat": "12h",
+              "displayTimeZone": false
+            }
+          }
+        },
+        {
+          "id": "f2YxBfGGVoQ",
+          "sdkName": "strengths",
+          "definition": {
+            "name": "Strengths",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "foR4FYaVL7j",
+          "sdkName": "concerns",
+          "definition": {
+            "name": "Concerns",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "ffHfrggQh1g",
+          "sdkName": "notes",
+          "definition": {
+            "name": "Notes",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fo2e7mkTquT",
+          "sdkName": "overallRating",
+          "definition": {
+            "name": "Overall Rating",
+            "type": "rating",
+            "template": {
+              "maxRating": 4
+            }
+          }
+        },
+        {
+          "id": "frZLCJD3a71",
+          "sdkName": "technicalSkill",
+          "definition": {
+            "name": "Technical Skill",
+            "type": "rating",
+            "template": {
+              "maxRating": 4
+            }
+          }
+        },
+        {
+          "id": "fsJczMANz8Q",
+          "sdkName": "communication",
+          "definition": {
+            "name": "Communication",
+            "type": "rating",
+            "template": {
+              "maxRating": 4
+            }
+          }
+        },
+        {
+          "id": "fwLAvvzx4dB",
+          "sdkName": "problemSolving",
+          "definition": {
+            "name": "Problem Solving",
+            "type": "rating",
+            "template": {
+              "maxRating": 4
+            }
+          }
+        },
+        {
+          "id": "fsw4Qij56VT",
+          "sdkName": "cultureAdd",
+          "definition": {
+            "name": "Culture Add",
+            "type": "rating",
+            "template": {
+              "maxRating": 4
+            }
+          }
+        },
+        {
+          "id": "fvsjCKpFhF9",
+          "sdkName": "recommendation",
+          "definition": {
+            "name": "Recommendation",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "4qiy",
+                  "label": "Strong Yes",
+                  "color": "purple"
+                },
+                {
+                  "value": "uty4",
+                  "label": "Yes",
+                  "color": "orange"
+                },
+                {
+                  "value": "wwT7",
+                  "label": "No",
+                  "color": "blue"
+                },
+                {
+                  "value": "hNqn",
+                  "label": "Strong No",
+                  "color": "gray"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "f8H2XUe1Hd7",
+          "sdkName": "status",
+          "definition": {
+            "name": "Status",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "pDMF",
+                  "label": "Pending",
+                  "color": "purple"
+                },
+                {
+                  "value": "ifR3",
+                  "label": "Submitted",
+                  "color": "orange"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fi7b8Zvre5P",
+          "sdkName": "interview",
+          "definition": {
+            "name": "Interview",
+            "type": "linked_record",
+            "template": {
+              "tableId": "thp1fRcFGm3",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fgUCzwKHwLo"
+            }
+          }
+        },
+        {
+          "id": "fqFzWyo1JAZ",
+          "sdkName": "application",
+          "definition": {
+            "name": "Application",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t6LkaNJSpPA",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fuss5oRG9Vm"
+            }
+          }
+        },
+        {
+          "id": "fp4ioZMNtn3",
+          "sdkName": "interviewer",
+          "definition": {
+            "name": "Interviewer",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t7uKGKpj6Xw",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fgUSPGArM2b"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "tgMRypqPQcb",
+      "sdkName": "activities",
+      "name": "Activities",
+      "primaryFieldId": "f2YmG3T7K5v",
+      "fields": [
+        {
+          "id": "f2YmG3T7K5v",
+          "sdkName": "summary",
+          "definition": {
+            "name": "Summary",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fowrY94eU9i",
+          "sdkName": "body",
+          "definition": {
+            "name": "Body",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fcwFXG2LxYM",
+          "sdkName": "occurredAt",
+          "definition": {
+            "name": "Occurred At",
+            "type": "datetime",
+            "template": {
+              "timezone": "",
+              "dateFormat": "local",
+              "timeFormat": "12h",
+              "displayTimeZone": false
+            }
+          }
+        },
+        {
+          "id": "fskfshx3E3v",
+          "sdkName": "type",
+          "definition": {
+            "name": "Type",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "hdXr",
+                  "label": "Note",
+                  "color": "purple"
+                },
+                {
+                  "value": "a1Vd",
+                  "label": "Stage Change",
+                  "color": "orange"
+                },
+                {
+                  "value": "oC6c",
+                  "label": "Email",
+                  "color": "blue"
+                },
+                {
+                  "value": "b8un",
+                  "label": "Interview Scheduled",
+                  "color": "gray"
+                },
+                {
+                  "value": "67kE",
+                  "label": "Scorecard",
+                  "color": "red"
+                },
+                {
+                  "value": "guaZ",
+                  "label": "Application Created",
+                  "color": "yellow"
+                },
+                {
+                  "value": "e1tf",
+                  "label": "Status Change",
+                  "color": "green"
+                },
+                {
+                  "value": "pcXR",
+                  "label": "Offer",
+                  "color": "pink"
+                },
+                {
+                  "value": "h14G",
+                  "label": "Rating",
+                  "color": "lime"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "frM3tzXxGSK",
+          "sdkName": "application",
+          "definition": {
+            "name": "Application",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t6LkaNJSpPA",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fgj1Ygs6bJg"
+            }
+          }
+        },
+        {
+          "id": "f6Ny258sRdV",
+          "sdkName": "candidate",
+          "definition": {
+            "name": "Candidate",
+            "type": "linked_record",
+            "template": {
+              "tableId": "twkRmyGxR4B",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fdx271bEQKB"
+            }
+          }
+        },
+        {
+          "id": "fjxWMCeXRnj",
+          "sdkName": "author",
+          "definition": {
+            "name": "Author",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t7uKGKpj6Xw",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fnF9PY7EFEe"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "tckVejmZAMC",
+      "sdkName": "offers",
+      "name": "Offers",
+      "primaryFieldId": "fr9AEPmryxi",
+      "fields": [
+        {
+          "id": "fr9AEPmryxi",
+          "sdkName": "title",
+          "definition": {
+            "name": "Title",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "f5iT4kMsvu7",
+          "sdkName": "level",
+          "definition": {
+            "name": "Level",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fgSFDVwbMMN",
+          "sdkName": "equity",
+          "definition": {
+            "name": "Equity",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fokfohrAyGu",
+          "sdkName": "baseSalary",
+          "definition": {
+            "name": "Base Salary",
+            "type": "currency",
+            "template": {
+              "numberFormat": "local",
+              "decimalPlaces": 0,
+              "currencySymbol": "$"
+            }
+          }
+        },
+        {
+          "id": "fiMAckY8wRJ",
+          "sdkName": "signingBonus",
+          "definition": {
+            "name": "Signing Bonus",
+            "type": "currency",
+            "template": {
+              "numberFormat": "local",
+              "decimalPlaces": 0,
+              "currencySymbol": "$"
+            }
+          }
+        },
+        {
+          "id": "f4MBD3aLVKD",
+          "sdkName": "startDate",
+          "definition": {
+            "name": "Start Date",
+            "type": "date",
+            "template": {
+              "dateFormat": "local"
+            }
+          }
+        },
+        {
+          "id": "f2jBLGN6V5B",
+          "sdkName": "expiresAt",
+          "definition": {
+            "name": "Expires At",
+            "type": "date",
+            "template": {
+              "dateFormat": "local"
+            }
+          }
+        },
+        {
+          "id": "f25RRxakjiW",
+          "sdkName": "sentAt",
+          "definition": {
+            "name": "Sent At",
+            "type": "datetime",
+            "template": {
+              "timezone": "",
+              "dateFormat": "local",
+              "timeFormat": "12h",
+              "displayTimeZone": false
+            }
+          }
+        },
+        {
+          "id": "fxphNm2tUmi",
+          "sdkName": "respondedAt",
+          "definition": {
+            "name": "Responded At",
+            "type": "datetime",
+            "template": {
+              "timezone": "",
+              "dateFormat": "local",
+              "timeFormat": "12h",
+              "displayTimeZone": false
+            }
+          }
+        },
+        {
+          "id": "fikUANFSRsZ",
+          "sdkName": "notes",
+          "definition": {
+            "name": "Notes",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fgaZpSRKUpi",
+          "sdkName": "status",
+          "definition": {
+            "name": "Status",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "6jm8",
+                  "label": "Draft",
+                  "color": "purple"
+                },
+                {
+                  "value": "dioB",
+                  "label": "Pending Approval",
+                  "color": "orange"
+                },
+                {
+                  "value": "qTRC",
+                  "label": "Approved",
+                  "color": "blue"
+                },
+                {
+                  "value": "1tgp",
+                  "label": "Sent",
+                  "color": "gray"
+                },
+                {
+                  "value": "1wdg",
+                  "label": "Accepted",
+                  "color": "red"
+                },
+                {
+                  "value": "nUxg",
+                  "label": "Declined",
+                  "color": "yellow"
+                },
+                {
+                  "value": "wnpr",
+                  "label": "Rescinded",
+                  "color": "green"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fpaKntAjHKr",
+          "sdkName": "application",
+          "definition": {
+            "name": "Application",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t6LkaNJSpPA",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "f72SntRo1Pw"
+            }
+          }
+        },
+        {
+          "id": "fnNbGqpeQVz",
+          "sdkName": "approver",
+          "definition": {
+            "name": "Approver",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t7uKGKpj6Xw",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fgFqdp5AbWB"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "t5j9Qv617gD",
+      "sdkName": "emailMessages",
+      "name": "Email Messages",
+      "primaryFieldId": "f7mCn7GQoNw",
+      "fields": [
+        {
+          "id": "f7mCn7GQoNw",
+          "sdkName": "subject",
+          "definition": {
+            "name": "Subject",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "f7zP731V7gJ",
+          "sdkName": "threadId",
+          "definition": {
+            "name": "Thread Id",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fbRsmvz3pMQ",
+          "sdkName": "externalMessageId",
+          "definition": {
+            "name": "External Message Id",
+            "type": "single_line_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "fhikAmffosL",
+          "sdkName": "fromEmail",
+          "definition": {
+            "name": "From Email",
+            "type": "email",
+            "template": {}
+          }
+        },
+        {
+          "id": "fp8UMYrzVtd",
+          "sdkName": "toEmail",
+          "definition": {
+            "name": "To Email",
+            "type": "email",
+            "template": {}
+          }
+        },
+        {
+          "id": "fiu9yVnrDDo",
+          "sdkName": "body",
+          "definition": {
+            "name": "Body",
+            "type": "long_text",
+            "template": {}
+          }
+        },
+        {
+          "id": "ffAkR3dcUJX",
+          "sdkName": "sentAt",
+          "definition": {
+            "name": "Sent At",
+            "type": "datetime",
+            "template": {
+              "timezone": "",
+              "dateFormat": "local",
+              "timeFormat": "12h",
+              "displayTimeZone": false
+            }
+          }
+        },
+        {
+          "id": "fbdtKpK6zcf",
+          "sdkName": "direction",
+          "definition": {
+            "name": "Direction",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "huyR",
+                  "label": "Outbound",
+                  "color": "purple"
+                },
+                {
+                  "value": "tgQd",
+                  "label": "Inbound",
+                  "color": "orange"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fjfDjBfgiak",
+          "sdkName": "status",
+          "definition": {
+            "name": "Status",
+            "type": "single_select",
+            "template": {
+              "options": [
+                {
+                  "value": "o82M",
+                  "label": "Draft",
+                  "color": "purple"
+                },
+                {
+                  "value": "c5aK",
+                  "label": "Sent",
+                  "color": "orange"
+                },
+                {
+                  "value": "1Vj8",
+                  "label": "Failed",
+                  "color": "blue"
+                },
+                {
+                  "value": "9rgc",
+                  "label": "Logged (Not Sent)",
+                  "color": "gray"
+                },
+                {
+                  "value": "tYJZ",
+                  "label": "Received",
+                  "color": "red"
+                }
+              ],
+              "disableColors": false
+            }
+          }
+        },
+        {
+          "id": "fvLtG4d9L9Q",
+          "sdkName": "application",
+          "definition": {
+            "name": "Application",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t6LkaNJSpPA",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fiohLh5d9eY"
+            }
+          }
+        },
+        {
+          "id": "fsjoFpe3zcV",
+          "sdkName": "candidate",
+          "definition": {
+            "name": "Candidate",
+            "type": "linked_record",
+            "template": {
+              "tableId": "twkRmyGxR4B",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "fqdkd4yQ5u4"
+            }
+          }
+        },
+        {
+          "id": "foTn83cRk6K",
+          "sdkName": "author",
+          "definition": {
+            "name": "Author",
+            "type": "linked_record",
+            "template": {
+              "tableId": "t7uKGKpj6Xw",
+              "isInverse": false,
+              "allowMultiple": false,
+              "inverseFieldId": "f57HsrUSgBT"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

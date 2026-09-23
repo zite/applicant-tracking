@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Light is the fallback; the app boots dark, which is where it was designed. */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 24% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 24% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 24% 11%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 43%;
+    --border: 220 13% 90%;
+    /* --border is a decorative divider; --input is the only thing that marks
+       where a form control is, so it carries the 3:1 non-text contrast bar
+       (3.03:1 on a white card) while dividers stay quiet. */
+    --input: 220 13% 60%;
+    --primary: 233 52% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 24% 16%;
+    --accent: 220 14% 94%;
+    --accent-foreground: 222 24% 11%;
+    --destructive: 358 66% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 233 52% 54%;
+    --radius: 0.5rem;
+
+    --surface: 220 20% 98%;
+    --elevated: 0 0% 100%;
+
+    --sidebar-background: 220 17% 97%;
+    --sidebar-foreground: 220 9% 36%;
+    --sidebar-primary: 233 52% 54%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 93%;
+    --sidebar-accent-foreground: 222 24% 11%;
+    --sidebar-border: 220 13% 90%;
+    --sidebar-ring: 233 52% 54%;
+
+    --chart-1: 233 52% 54%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 32 90% 54%;
+    --chart-4: 280 52% 58%;
+    --chart-5: 198 78% 46%;
+
+    /* Chart series. Validated for CVD separation and lightness band against
+       the light surface — see the dark block for the dark-mode steps. Two
+       categorical slots is all this app needs; every other chart is single
+       series and uses --series-1 alone. */
+    /* Semantic tones. Stored as RGB channels so Tailwind's opacity modifiers
+       work (bg-tone-warning/10). Light values are measured against a white card
+       at >= 4.5:1 — the Tailwind 400 shades this app used to hardcode score as
+       low as 1.67:1 on white, which is what made amber text unreadable. */
+    --tone-warning: 180 83 9;    /* 5.02:1 */
+    --tone-info: 3 105 161;      /* 5.93:1 */
+    --tone-success: 4 120 87;    /* 5.48:1 */
+    --tone-danger: 225 29 72;    /* 4.70:1 */
+    --tone-accent: 124 58 237;   /* 5.70:1 */
+    --tone-neutral: 100 116 139; /* 4.76:1 */
+
+    --series-1: #4F5BC4;
+    --series-2: #1C8A73;
+    --grid-line: 220 13% 90%;
+
+    --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+  }
+
+  .dark {
+    --background: 220 14% 4%;
+    --foreground: 210 16% 96%;
+    --card: 220 11% 6%;
+    --card-foreground: 210 16% 96%;
+    --popover: 220 11% 8%;
+    --popover-foreground: 210 16% 96%;
+    --muted: 220 9% 12%;
+    --muted-foreground: 220 7% 56%;
+    --border: 220 8% 15%;
+    --input: 220 10% 40%; /* 3.16:1 on the dark card */
+    --primary: 233 56% 62%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 9% 12%;
+    --secondary-foreground: 210 16% 92%;
+    --accent: 220 9% 15%;
+    --accent-foreground: 210 16% 96%;
+    --destructive: 358 62% 54%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 233 56% 62%;
+
+    --surface: 220 13% 5%;
+    --elevated: 220 10% 8%;
+
+    --sidebar-background: 220 13% 5%;
+    --sidebar-foreground: 220 7% 60%;
+    --sidebar-primary: 233 56% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 9% 13%;
+    --sidebar-accent-foreground: 210 16% 96%;
+    --sidebar-border: 220 8% 14%;
+    --sidebar-ring: 233 56% 62%;
+
+    --chart-1: 233 56% 64%;
+    --chart-2: 168 62% 48%;
+    --chart-3: 32 92% 60%;
+    --chart-4: 280 60% 68%;
+    --chart-5: 198 82% 56%;
+
+    /* Re-stepped for the dark surface rather than flipped — the light values
+       fail the dark lightness band. */
+    /* Re-stepped for the dark surface, not flipped: the light tones are far too
+       dark to read on it. All >= 7:1 against the dark card. */
+    --tone-warning: 251 191 36;
+    --tone-info: 56 189 248;
+    --tone-success: 52 211 153;
+    --tone-danger: 251 113 133;
+    --tone-accent: 167 139 250;
+    --tone-neutral: 148 163 184;
+
+    --series-1: #707CD7;
+    --series-2: #2DA990;
+    --grid-line: 220 8% 15%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    /* 13px base. The whole layout is calibrated to it — raising it loosens
+       every row, column and card at once. */
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.28);
+  }
+
+  /* Thin, self-effacing scrollbars — the board has several at once. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.25);
+    border-radius: 6px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.45);
+    background-clip: content-box;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring) / 0.6);
+    outline-offset: 1px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .surface {
+    background: hsl(var(--surface));
+  }
+  .elevated {
+    background: hsl(var(--elevated));
+  }
+
+  /* Board columns scroll independently; the page itself never scrolls sideways. */
+  .board-scroll {
+    scrollbar-gutter: stable;
+  }
+
+  .card-hover {
+    transition: background-color 120ms ease, border-color 120ms ease, transform 120ms ease;
+  }
+  .card-hover:hover {
+    background: hsl(var(--accent));
+    border-color: hsl(var(--border));
+  }
+
+  .row-hover {
+    transition: background-color 100ms ease;
+  }
+  .row-hover:hover {
+    background: hsl(var(--accent) / 0.6);
+  }
+
+  /* Used for keyboard hints in the palette and headers. */
+  .kbd {
+    @apply inline-flex h-5 min-w-[20px] items-center justify-center rounded border px-1.5 font-mono text-[10px] font-medium;
+    background: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
+    border-color: hsl(var(--border));
+  }
+
+  .skeleton-shimmer {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted)) 0%,
+      hsl(var(--accent)) 50%,
+      hsl(var(--muted)) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fade-rise {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-fade-rise {
+  animation: fade-rise 160ms ease-out both;
+}
