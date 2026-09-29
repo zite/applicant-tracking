@@ -43,9 +43,11 @@ Two apps share one database:
 | **Applicant Tracking** | `apps/applicant-tracking` | Recruiters and hiring managers: pipeline board, candidate profiles, interviews and scorecards, offers, email, analytics | Internal (organization members) |
 | **Careers Site** | `apps/careers-site` | Candidates: the public job list and application form | External (public) |
 
-Both are seeded with a realistic demo workspace on first open, so the template is
-never evaluated against empty screens. The fictional employer in that demo data is
-Northwind Labs.
+A new install starts empty. To look around first, an admin can load sample data
+from the bottom of **Settings**: a fictional employer, Northwind Labs, with its
+hiring team, jobs, candidates, interviews and offers. It only loads into a
+workspace with no jobs or candidates, and there is no one-click way to remove it,
+so it is for a workspace you are using to try the app.
 
 <p align="center">
   <img alt="The pipeline board, by stage, with ratings and stage targets" src=".github/assets/pipeline.png">
@@ -153,7 +155,9 @@ claude mcp add --transport http zite https://mcp.zite.com/mcp
 > (`"ApplicationsCandidates"` with an `"applicationsId"` column), so a mismatched
 > sdkName is a runtime 500 that no type-check will catch.
 
-**3. Open the recruiter app.** It seeds the demo in five phases on first load.
+**3. Open the recruiter app.** It starts empty, and the first person to open it
+is added to the hiring team as its Admin. Create a job from **Jobs** to begin, or
+load the sample data from the bottom of **Settings** to try the app first.
 
 ---
 

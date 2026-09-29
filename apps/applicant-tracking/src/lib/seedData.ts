@@ -1,6 +1,18 @@
-// Demo content for this applicant tracking template. Shipped as code so an
-// installed copy of the template seeds itself — see src/api/seedDemoData.ts.
+// Sample content for this applicant tracking template. Nothing loads it on its
+// own: an admin loads it from the bottom of Settings, and only into a workspace
+// with no jobs or candidates yet. See src/api/seedDemoData.ts for the rules.
 // The fictional employer is Northwind Labs; nothing here is a real address.
+
+// The seed runs in five phases, one endpoint call each. The endpoint returns
+// these labels and the Settings control shows them while each phase runs. This
+// file is imported by the browser for them alone; the rest is tree-shaken out.
+export const SAMPLE_PHASES = [
+  'Jobs, stages and team',
+  'Candidate profiles',
+  'Applications and pipeline placement',
+  'Interview history',
+  'Feedback, offers and activity',
+] as const;
 
 export const TEAM = [
   { name: 'Maya Chen', email: 'maya.chen@northwindlabs.com', title: 'Head of Talent', role: 'Admin', department: 'People' },

@@ -1,13 +1,29 @@
 import { z } from 'zod';
-import { createEndpoint } from 'zitejs/backend';
+import { createEndpoint, ZiteError } from 'zitejs/backend';
 import { zite } from 'zitejs/db';
-import { TEAM, JOBS, STAGE_TEMPLATES, EMAIL_TEMPLATES } from '../lib/seedData';
+import { TEAM, JOBS, STAGE_TEMPLATES, EMAIL_TEMPLATES, SAMPLE_PHASES } from '../lib/seedData';
 import { CANDIDATES } from '../lib/seedCandidates';
+import { ensureFirstAdmin, findMemberByEmail, firstId } from '../lib/actor';
+import { adminBlocker, contentBlocker } from '../lib/sampleEligibility';
 
-// Seeding runs in phases because a single pass writes well over a thousand
-// records — more than one endpoint invocation should carry. The client walks
-// phases until `done`, which also gives it something honest to show a progress
-// indicator with. Every phase is idempotent on its own table.
+// Loads the sample data when an admin asks for it from Settings. Nothing calls
+// this on its own. It runs in phases because a single pass writes well over a
+// thousand records, more than one endpoint invocation should carry. The client
+// walks phases until `done`, which also gives it something honest to show
+// while it waits.
+//
+// The rules, checked on every call rather than trusted to the client:
+//   - Only an Admin on the hiring team can run any phase.
+//   - Phase 1 refuses a workspace that already has jobs or candidates.
+//   - Phases 2 to 5 refuse unless phase 1 of the sample ran here. The marker is
+//     the sample's own hiring team (nine @northwindlabs.com addresses no real
+//     workspace holds) and its eight jobs, by slug. Everything they create
+//     hangs off those rows and no others.
+//   - Each phase skips when its own table already has rows, so a second full
+//     run cannot seed anything twice.
+
+const SAMPLE_EMAILS = new Set(TEAM.map((t) => t.email));
+const SAMPLE_SLUGS = JOBS.map((j) => j.slug);
 
 const MS_DAY = 86_400_000;
 const daysAgo = (n: number) => new Date(Date.now() - n * MS_DAY);
@@ -31,7 +47,7 @@ const firstName = (name: string) => name.split(' ')[0];
 const appliedDaysFor = (stageIdx: number, i: number) => 8 + stageIdx * 11 + (i % 7);
 
 export default createEndpoint({
-  description: 'Load the demo workspace in phases; safe to call repeatedly',
+  description: 'Load the sample data in five phases, for an admin, into a workspace with no jobs or candidates',
   authenticated: true,
   inputSchema: z.object({ phase: z.number().int().min(1).max(5).optional() }),
   outputSchema: z.object({
@@ -40,23 +56,39 @@ export default createEndpoint({
     done: z.boolean(),
     label: z.string(),
   }),
-  execute: async ({ input }) => {
-    const phase = input.phase ?? 1;
+  execute: async ({ input, context }) => {
+    // The runtime does not enforce inputSchema before execute, so check here.
+    const phase = input?.phase ?? 1;
+    if (!Number.isInteger(phase) || phase < 1 || phase > 5) {
+      throw new ZiteError('phase must be a whole number from 1 to 5', 'BAD_REQUEST');
+    }
+    const email = context.user?.email;
+
+    // Called before anyone has opened the app, the team is still empty and the
+    // caller would never pass the admin check.
+    await ensureFirstAdmin(context.user);
+    const notAdmin = await adminBlocker(email);
+    if (notAdmin) throw new ZiteError(notAdmin, 'FORBIDDEN');
 
     // ---------------------------------------------------------------- phase 1
     if (phase === 1) {
-      const existing = await zite.jobs.findAll({ limit: 1 });
-      if (existing.records.length > 0) {
-        return { phase: 1, created: 0, done: false, label: 'Foundation already present' };
-      }
+      const hasContent = await contentBlocker();
+      if (hasContent) throw new ZiteError(hasContent, 'CONFLICT');
 
-      const team = await zite.teamMembers.bulkCreate({
-        records: TEAM.map((t) => ({
-          name: t.name, email: t.email, title: t.title, role: t.role,
-          department: t.department, active: true, avatarUrl: avatar(t.email),
-        })),
-      });
-      const byName = new Map(team.records.map((r) => [r.name ?? '', r.id]));
+      // A previous attempt that died after this step leaves the roster behind,
+      // so reuse anyone already here. The installer's own row is never touched.
+      const present = await zite.teamMembers.findAll({ filters: { email: { in: [...SAMPLE_EMAILS] } }, limit: 100 });
+      const presentEmails = new Set(present.records.map((r) => (r.email ?? '').toLowerCase()));
+      const added = TEAM.filter((t) => !presentEmails.has(t.email));
+      const team = added.length
+        ? await zite.teamMembers.bulkCreate({
+            records: added.map((t) => ({
+              name: t.name, email: t.email, title: t.title, role: t.role,
+              department: t.department, active: true, avatarUrl: avatar(t.email),
+            })),
+          })
+        : { records: [] };
+      const byName = new Map([...present.records, ...team.records].map((r) => [r.name ?? '', r.id]));
 
       const jobs = await zite.jobs.bulkCreate({
         records: JOBS.map((j) => ({
@@ -84,15 +116,49 @@ export default createEndpoint({
       });
       await chunked(stageRows, (b) => zite.stages.bulkCreate({ records: b }));
 
-      await zite.emailTemplates.bulkCreate({
-        records: EMAIL_TEMPLATES.map((t) => ({
-          name: t.name, subject: t.subject, body: t.body, category: t.category,
-        })),
-      });
+      // Templates the admin already wrote under the same name are left alone.
+      const templateNames = new Set(
+        (await zite.emailTemplates.findAll({ limit: 500 })).records.map((t) => t.name ?? ''),
+      );
+      const templates = EMAIL_TEMPLATES.filter((t) => !templateNames.has(t.name));
+      if (templates.length) {
+        await zite.emailTemplates.bulkCreate({
+          records: templates.map((t) => ({
+            name: t.name, subject: t.subject, body: t.body, category: t.category,
+          })),
+        });
+      }
 
-      const created = team.records.length + jobs.records.length + stageRows.length + EMAIL_TEMPLATES.length;
-      return { phase: 1, created, done: false, label: 'Jobs, stages and team' };
+      const created = team.records.length + jobs.records.length + stageRows.length + templates.length;
+      return { phase: 1, created, done: false, label: SAMPLE_PHASES[0] };
     }
+
+    // ------------------------------------------------------- phases 2 to 5
+    const [sampleTeam, sampleJobs] = await Promise.all([
+      zite.teamMembers.findAll({ filters: { email: { in: [...SAMPLE_EMAILS] } }, limit: 100 }),
+      zite.jobs.findAll({ filters: { slug: { in: SAMPLE_SLUGS } }, limit: 100 }),
+    ]);
+    const sampleTeamEmails = new Set(sampleTeam.records.map((t) => (t.email ?? '').toLowerCase()));
+    const sampleJobSlugs = new Set(sampleJobs.records.map((j) => j.slug ?? ''));
+    if (sampleTeamEmails.size < SAMPLE_EMAILS.size || SAMPLE_SLUGS.some((s) => !sampleJobSlugs.has(s))) {
+      throw new ZiteError(
+        'The sample data has not been started in this workspace. Load it from Settings, which runs phase 1 first.',
+        'CONFLICT',
+      );
+    }
+
+    // The people the sample hands work to: its own roster plus whoever is
+    // loading it. Real colleagues the admin added first are left out of it.
+    const caller = await findMemberByEmail(email);
+    const inSample = (t: { id: string; email?: string }) =>
+      SAMPLE_EMAILS.has((t.email ?? '').toLowerCase()) || t.id === caller?.id;
+    // Later phases build on applications, and only on those in sample jobs.
+    const sampleJobIds = new Set(sampleJobs.records.map((j) => j.id));
+    const sampleApps = async () =>
+      (await zite.applications.findAll({ limit: 500 })).records.filter((a) => {
+        const jobId = firstId(a.job);
+        return jobId !== null && sampleJobIds.has(jobId);
+      });
 
     // ---------------------------------------------------------------- phase 2
     if (phase === 2) {
@@ -117,7 +183,7 @@ export default createEndpoint({
         };
       });
       await chunked(rows, (b) => zite.candidates.bulkCreate({ records: b }));
-      return { phase: 2, created: rows.length, done: false, label: 'Candidate profiles' };
+      return { phase: 2, created: rows.length, done: false, label: SAMPLE_PHASES[1] };
     }
 
     // ---------------------------------------------------------------- phase 3
@@ -127,15 +193,14 @@ export default createEndpoint({
         return { phase: 3, created: 0, done: false, label: 'Applications already present' };
       }
 
-      const [jobs, stages, cands, team] = await Promise.all([
-        zite.jobs.findAll({ limit: 100 }),
+      const [stages, cands, team] = await Promise.all([
         zite.stages.findAll({ limit: 500 }),
         zite.candidates.findAll({ limit: 500 }),
         zite.teamMembers.findAll({ limit: 100 }),
       ]);
-      const jobBySlug = new Map(jobs.records.map((r) => [r.slug ?? '', r]));
-      const candByName = new Map(cands.records.map((r) => [r.fullName ?? '', r.id]));
-      const recruiters = team.records.filter((t) => t.role === 'Recruiter' || t.role === 'Admin');
+      const jobBySlug = new Map(sampleJobs.records.map((r) => [r.slug ?? '', r]));
+      const candByEmail = new Map(cands.records.map((r) => [(r.email ?? '').toLowerCase(), r.id]));
+      const recruiters = team.records.filter((t) => inSample(t) && (t.role === 'Recruiter' || t.role === 'Admin'));
 
       // Stage rows keyed by "<jobId>:<order>" so a candidate's stage index maps
       // onto that job's own pipeline rather than a global one.
@@ -145,17 +210,18 @@ export default createEndpoint({
         if (jobId) stageByJobOrder.set(`${jobId}:${s.order}`, s.id);
       }
 
-      const rows = CANDIDATES.map((c, i) => {
+      const rows = CANDIDATES.flatMap((c, i) => {
         const job = jobBySlug.get(c.j);
-        const candidateId = candByName.get(c.n);
-        const stageId = job ? stageByJobOrder.get(`${job.id}:${c.s + 1}`) : undefined;
+        const candidateId = candByEmail.get(emailFor(c.n));
+        if (!job || !candidateId) return [];
+        const stageId = stageByJobOrder.get(`${job.id}:${c.s + 1}`);
         const appliedDays = appliedDaysFor(c.s, i);
         const owner = recruiters[i % Math.max(recruiters.length, 1)];
         const isClosed = c.st === 'Rejected' || c.st === 'Withdrawn';
-        return {
-          application: `${c.n} — ${job?.title ?? 'Unknown role'}`,
-          candidate: candidateId ? [candidateId] : null,
-          job: job ? [job.id] : null,
+        return [{
+          application: `${c.n} — ${job.title ?? 'Unknown role'}`,
+          candidate: [candidateId],
+          job: [job.id],
           currentStage: stageId ? [stageId] : null,
           owner: owner ? [owner.id] : null,
           appliedDate: dateOnly(daysAgo(appliedDays)),
@@ -165,10 +231,10 @@ export default createEndpoint({
           source: c.src,
           rejectionReason: c.st === 'Rejected' ? (c.rr ?? 'Other') : null,
           rejectedDate: isClosed ? dateOnly(daysAgo(Math.max(1, Math.floor(appliedDays / 4)))) : null,
-        };
+        }];
       });
       await chunked(rows, (b) => zite.applications.bulkCreate({ records: b }));
-      return { phase: 3, created: rows.length, done: false, label: 'Applications and pipeline placement' };
+      return { phase: 3, created: rows.length, done: false, label: SAMPLE_PHASES[2] };
     }
 
     // ---------------------------------------------------------------- phase 4
@@ -179,14 +245,14 @@ export default createEndpoint({
       }
 
       const [apps, stages, team] = await Promise.all([
-        zite.applications.findAll({ limit: 500 }),
+        sampleApps(),
         zite.stages.findAll({ limit: 500 }),
         zite.teamMembers.findAll({ limit: 100 }),
       ]);
       const stageById = new Map(stages.records.map((s) => [s.id, s]));
-      const interviewers = team.records.filter((t) => t.role === 'Interviewer' || t.role === 'Hiring Manager');
+      const interviewers = team.records.filter((t) => inSample(t) && (t.role === 'Interviewer' || t.role === 'Hiring Manager'));
       const appFor = (name: string) =>
-        apps.records.find((a) => (a.application ?? '').startsWith(`${name} \u2014 `));
+        apps.find((a) => (a.application ?? '').startsWith(`${name} \u2014 `));
 
       const interviewRows: Record<string, unknown>[] = [];
       const TYPES = ['Recruiter Screen', 'Technical', 'Hiring Manager', 'Onsite', 'Final'];
@@ -224,24 +290,32 @@ export default createEndpoint({
       });
 
       await chunked(interviewRows, (b) => zite.interviews.bulkCreate({ records: b }));
-      return { phase: 4, created: interviewRows.length, done: false, label: 'Interview history' };
+      return { phase: 4, created: interviewRows.length, done: false, label: SAMPLE_PHASES[3] };
     }
 
     // ---------------------------------------------------------------- phase 5
     const existingAct = await zite.activities.findAll({ limit: 1 });
     if (existingAct.records.length > 0) {
-      return { phase: 5, created: 0, done: true, label: 'Demo data ready' };
+      return { phase: 5, created: 0, done: true, label: 'Sample data ready' };
     }
 
-    const [apps, interviews, team, cands] = await Promise.all([
-      zite.applications.findAll({ limit: 500 }),
+    const [appRows, allInterviews, team, cands] = await Promise.all([
+      sampleApps(),
       zite.interviews.findAll({ limit: 1000 }),
       zite.teamMembers.findAll({ limit: 100 }),
       zite.candidates.findAll({ limit: 500 }),
     ]);
+    const apps = { records: appRows };
+    const sampleAppIds = new Set(appRows.map((a) => a.id));
+    const interviews = {
+      records: allInterviews.records.filter((iv) => {
+        const appId = firstId(iv.application);
+        return appId !== null && sampleAppIds.has(appId);
+      }),
+    };
     const candById = new Map(cands.records.map((c) => [c.id, c]));
-    const interviewers = team.records.filter((t) => t.role === 'Interviewer' || t.role === 'Hiring Manager');
-    const recruiters = team.records.filter((t) => t.role === 'Recruiter' || t.role === 'Admin');
+    const interviewers = team.records.filter((t) => inSample(t) && (t.role === 'Interviewer' || t.role === 'Hiring Manager'));
+    const recruiters = team.records.filter((t) => inSample(t) && (t.role === 'Recruiter' || t.role === 'Admin'));
     const completed = interviews.records.filter((i) => i.status === 'Completed');
 
     const VERDICTS = [
@@ -251,10 +325,12 @@ export default createEndpoint({
       { rec: 'No', overall: 2, s: 'Friendly and clearly capable within a familiar stack.', c: 'Struggled once the problem moved outside patterns they had memorised. Not ready for this level.' },
     ];
 
-    // Whoever opens an installed template is not in the seeded roster and falls
-    // back to the admin, so the admin needs to actually be on some panels or the
-    // inbox greets them with nothing to do.
-    const lead = team.records.find((t) => t.role === 'Admin');
+    // Whoever loads the sample is not in its roster, so put them on some panels
+    // or their inbox greets them with nothing to do. They are always an Admin
+    // on the team by now; the sample's own Admin is only a fallback.
+    const lead =
+      team.records.find((t) => t.id === caller?.id) ??
+      team.records.find((t) => SAMPLE_EMAILS.has((t.email ?? '').toLowerCase()) && t.role === 'Admin');
     if (lead) {
       const screens = interviews.records.filter((i) => i.type === 'Recruiter Screen').slice(0, 20);
       for (const iv of screens) {
@@ -435,6 +511,6 @@ export default createEndpoint({
 
     const created =
       scorecardRows.length + pendingRows.length + offerRows.length + activityRows.length + emailRows.length;
-    return { phase: 5, created, done: true, label: 'Feedback, offers and activity' };
+    return { phase: 5, created, done: true, label: SAMPLE_PHASES[4] };
   },
 });

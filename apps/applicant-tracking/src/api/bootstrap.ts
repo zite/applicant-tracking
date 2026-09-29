@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { createEndpoint } from 'zitejs/backend';
 import { zite } from 'zitejs/db';
+import { ensureFirstAdmin } from '../lib/actor';
+import { sampleDataBlocker } from '../lib/sampleEligibility';
 
 // One call that paints the whole shell: the signed-in user, the team, every job
 // with its live pipeline count, and the handful of totals the sidebar shows.
@@ -45,7 +47,8 @@ export default createEndpoint({
   authenticated: true,
   inputSchema: z.object({}),
   outputSchema: z.object({
-    seeded: z.boolean(),
+    // Whether Settings shows "Load sample data" to this person.
+    canLoadSampleData: z.boolean(),
     me: Member.nullable(),
     team: z.array(Member),
     jobs: z.array(JobSummary),
@@ -58,24 +61,33 @@ export default createEndpoint({
     }),
   }),
   execute: async ({ context }) => {
-    const [jobRes, teamRes] = await Promise.all([
+    const [jobRes, firstTeamRes] = await Promise.all([
       zite.jobs.findAll({ limit: 200 }),
       zite.teamMembers.findAll({ limit: 200 }),
     ]);
 
+    // A fresh install starts with an empty hiring team. The first person in
+    // becomes its Admin, so the app has an identity to attribute work to.
+    const teamRes =
+      firstTeamRes.records.length === 0 && (await ensureFirstAdmin(context.user))
+        ? await zite.teamMembers.findAll({ limit: 200 })
+        : firstTeamRes;
+
+    // Unset text reads as '' rather than null, so `||` rather than `??`: a
+    // member added without a title should fall back like one with no title.
     const team = teamRes.records.map((t) => ({
       id: t.id,
       name: t.name || 'Unnamed',
-      email: t.email ?? null,
-      title: t.title ?? null,
-      role: t.role ?? null,
-      department: t.department ?? null,
-      avatarUrl: t.avatarUrl ?? null,
+      email: t.email || null,
+      title: t.title || null,
+      role: t.role || null,
+      department: t.department || null,
+      avatarUrl: t.avatarUrl || null,
     }));
 
-    // Match the signed-in Zite user to a team member by email. Demo workspaces
-    // are opened by people who are not in the seeded roster, so fall back to an
-    // admin rather than rendering the app with no identity at all.
+    // Match the signed-in Zite user to a team member by email. Someone the
+    // admin has not added to the team yet falls back to an admin rather than
+    // rendering the app with no identity at all.
     const email = (context.user?.email ?? '').toLowerCase();
     const me =
       team.find((t) => (t.email ?? '').toLowerCase() === email) ??
@@ -153,8 +165,13 @@ export default createEndpoint({
       })
     ).rows[0] ?? {};
 
+    // Only a workspace with no jobs can be eligible, so the common case skips
+    // the extra lookups entirely.
+    const canLoadSampleData =
+      jobRes.records.length === 0 && (await sampleDataBlocker(context.user?.email)) === null;
+
     return {
-      seeded: jobRes.records.length > 0,
+      canLoadSampleData,
       me,
       team,
       jobs,

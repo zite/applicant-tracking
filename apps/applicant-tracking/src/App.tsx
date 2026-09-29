@@ -1,7 +1,6 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Toaster } from '@project/components/ui/sonner';
 import { AppShell } from './components/AppShell';
-import { SeedGate } from './components/SeedGate';
 import { useBootstrap } from './lib/queries';
 import { useFavicon } from './lib/useFavicon';
 import { ShellSkeleton } from './components/ShellSkeleton';
@@ -35,23 +34,21 @@ function Shell() {
   }
 
   return (
-    <SeedGate seeded={data.seeded}>
-      <Routes>
-        <Route element={<AppShell data={data} />}>
-          <Route index element={<Navigate to="/inbox" replace />} />
-          <Route path="/inbox" element={<InboxPage />} />
-          <Route path="/pipeline" element={<PipelinePage />} />
-          <Route path="/pipeline/:jobId" element={<PipelinePage />} />
-          <Route path="/candidates" element={<CandidatesPage />} />
-          <Route path="/candidate/:applicationId" element={<CandidateDetailPage />} />
-          <Route path="/interviews" element={<InterviewsPage />} />
-          <Route path="/jobs" element={<JobsPage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="*" element={<Navigate to="/inbox" replace />} />
-        </Route>
-      </Routes>
-    </SeedGate>
+    <Routes>
+      <Route element={<AppShell data={data} />}>
+        <Route index element={<Navigate to="/inbox" replace />} />
+        <Route path="/inbox" element={<InboxPage />} />
+        <Route path="/pipeline" element={<PipelinePage />} />
+        <Route path="/pipeline/:jobId" element={<PipelinePage />} />
+        <Route path="/candidates" element={<CandidatesPage />} />
+        <Route path="/candidate/:applicationId" element={<CandidateDetailPage />} />
+        <Route path="/interviews" element={<InterviewsPage />} />
+        <Route path="/jobs" element={<JobsPage />} />
+        <Route path="/analytics" element={<AnalyticsPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="*" element={<Navigate to="/inbox" replace />} />
+      </Route>
+    </Routes>
   );
 }
 

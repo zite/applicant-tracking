@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { CheckCircle2, CircleSlash, Mail, Pencil, Plus, Sparkles, Trash2 } from 'lucide-react';
-import { deleteEmailTemplate, listEmailTemplates, removeTeamMember } from 'zitejs/api';
+import { CheckCircle2, CircleSlash, Loader2, Mail, Pencil, Plus, Sparkles, Trash2 } from 'lucide-react';
+import { deleteEmailTemplate, listEmailTemplates, removeTeamMember, seedDemoData } from 'zitejs/api';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
@@ -13,6 +13,8 @@ import type { TeamMember } from '../lib/queries';
 import { PageHeader } from '../components/PageHeader';
 import { Avatar } from '../components/Avatar';
 import { useBootstrap, useIntegrations } from '../lib/queries';
+import { SAMPLE_PHASES } from '../lib/seedData';
+import { parseApiError } from '../lib/validation';
 
 function IntegrationRow({
   icon: Icon,
@@ -65,6 +67,80 @@ function IntegrationRow({
         </div>
       </div>
     </div>
+  );
+}
+
+// Kept deliberately quiet at the bottom of Settings. It only renders for an
+// admin while the workspace has no jobs or candidates (bootstrap decides, and
+// seedDemoData enforces the same rule), and it stays mounted while it runs so a
+// refetch mid-load cannot pull it out from under the progress label.
+function SampleDataSection() {
+  const boot = useBootstrap();
+  const queryClient = useQueryClient();
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [step, setStep] = useState(0);
+
+  const load = useMutation({
+    mutationFn: async () => {
+      for (let phase = 1; phase <= SAMPLE_PHASES.length; phase++) {
+        setStep(phase);
+        const result = await seedDemoData({ phase });
+        if (result.done) break;
+      }
+    },
+    onSuccess: () => toast.success('Sample data loaded'),
+    onError: (error) => toast.error(parseApiError(error).message || 'Could not load the sample data'),
+    onSettled: () => queryClient.invalidateQueries(),
+  });
+
+  if (load.isSuccess || (!boot.data?.canLoadSampleData && !load.isPending)) return null;
+
+  return (
+    <section>
+      <h2 className="mb-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+        Sample data
+      </h2>
+      <p className="mb-2.5 text-[12px] text-muted-foreground">
+        Adds a fictional company with jobs, candidates and interviews, so you can try every
+        screen.
+      </p>
+      <button
+        type="button"
+        onClick={() => setConfirmOpen(true)}
+        disabled={load.isPending}
+        className="flex items-center gap-1.5 rounded-md border border-border px-2 py-1 text-[11.5px] text-muted-foreground transition hover:bg-accent hover:text-foreground disabled:pointer-events-none"
+      >
+        {load.isPending ? (
+          <>
+            <Loader2 className="h-3 w-3 animate-spin" />
+            {SAMPLE_PHASES[step - 1] ?? 'Starting'} ({step} of {SAMPLE_PHASES.length})
+          </>
+        ) : (
+          'Load sample data'
+        )}
+      </button>
+
+      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-[15px]">Load the sample data?</AlertDialogTitle>
+            <AlertDialogDescription className="text-[13px] leading-relaxed">
+              This adds Northwind Labs, a fictional company: 9 team members, 8 jobs with their
+              pipelines, 72 candidates, and their interviews, feedback, offers and emails. Some of
+              its candidates and interview panels are assigned to you, and its 7 published jobs
+              appear on your careers site. There is no one-click way to remove it afterwards, so
+              only load it into a workspace you are using to try the app.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="text-[12.5px]">Cancel</AlertDialogCancel>
+            <AlertDialogAction className="text-[12.5px]" onClick={() => load.mutate()}>
+              Load sample data
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </section>
   );
 }
 
@@ -296,6 +372,8 @@ export function SettingsPage() {
               ))}
             </div>
           </section>
+
+          <SampleDataSection />
         </div>
       </div>
 
