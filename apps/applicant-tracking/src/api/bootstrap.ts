@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { createEndpoint } from 'zitejs/backend';
 import { zite } from 'zitejs/db';
-import { ensureFirstAdmin } from '../lib/actor';
+import { demoStandInAdmin, ensureFirstAdmin } from '../lib/actor';
 import { sampleDataBlocker } from '../lib/sampleEligibility';
 
 // One call that paints the whole shell: the signed-in user, the team, every job
@@ -93,7 +93,7 @@ export default createEndpoint({
       team.find((t) => (t.email ?? '').toLowerCase() === email) ??
       team.find((t) => t.role === 'Admin') ??
       team[0] ??
-      null;
+      demoStandInAdmin(context.user);
 
     // Counts per job in one pass rather than one query per card.
     const countRows = jobRes.records.length

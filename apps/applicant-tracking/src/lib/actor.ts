@@ -1,4 +1,5 @@
 import { zite } from 'zitejs/db';
+import { DEMO_EMAIL, isDemo } from './demoPreview';
 
 type SessionUser = { email?: string | null; [key: string]: unknown } | null | undefined;
 
@@ -14,6 +15,8 @@ const nameFromEmail = (email: string) =>
 export async function ensureFirstAdmin(user: SessionUser): Promise<boolean> {
   const email = text(user?.email).toLowerCase();
   if (!email) return false;
+  // The demo's database is read-only and refuses the whole request on any write.
+  if (isDemo({ user })) return false;
   const existing = await zite.teamMembers.findAll({ limit: 1 });
   if (existing.records.length > 0) return false;
 
@@ -43,6 +46,21 @@ export async function ensureFirstAdmin(user: SessionUser): Promise<boolean> {
   });
   return true;
 }
+
+// The demo can't create the first Admin, so an empty team renders as an
+// in-memory one; the nil id matches no row, so id-scoped queries come back empty.
+export const demoStandInAdmin = (user: SessionUser) =>
+  isDemo({ user })
+    ? {
+        id: '00000000-0000-0000-0000-000000000000',
+        name: text(user?.firstName) || 'Demo User',
+        email: DEMO_EMAIL,
+        title: null,
+        role: 'Admin',
+        department: null,
+        avatarUrl: null,
+      }
+    : null;
 
 // The signed-in person's own Team Members row, matched by email and nothing
 // else. Use this where acting as someone else would be wrong, such as an

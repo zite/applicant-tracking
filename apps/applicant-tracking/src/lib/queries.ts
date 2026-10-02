@@ -13,6 +13,7 @@ export function useBootstrap() {
     queryKey: ['bootstrap'],
     queryFn: () => bootstrap({}),
     staleTime: 30_000,
+    retry: (n, e) => n < 2 && !/\b4\d\d\b|FORBIDDEN|DEMO_READ_ONLY/.test(String(e)),
   });
 }
 
